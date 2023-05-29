@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
+  # Building tags
   class Tag
     SINGLE_TAGS = %w[
       !doctype
@@ -25,7 +26,7 @@ module HexletCode
       def build(name, options = {}, &block)
         attrs = options.map { |attr, value| "#{attr}=\"#{value}\"" }.join(" ")
         content = block.call if block_given?
-        
+
         if SINGLE_TAGS.include?(name)
           build_single_tag(name, attrs)
         else
