@@ -8,7 +8,8 @@ module HexletCode
 
   extend self
 
-  def form_for(object, &block)
-    return nil
+  def form_for(object, options = {}, &block)
+    action = options[:url] || '#'
+    Tag.build('form', action: action, method: 'post')
   end
 end

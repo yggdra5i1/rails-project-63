@@ -16,4 +16,12 @@ class TestHexletCode < Minitest::Test
     expected_res = '<form action="#" method="post"></form>'
     assert_equal res, expected_res
   end
+
+  def test_form_for_with_options
+    user = User.new name: 'rob'
+    res = HexletCode.form_for user, url: '/users' do |f|
+    end
+    expected_res = '<form action="/users" method="post"></form>'
+    assert_equal res, expected_res
+  end
 end
