@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
+  # Utility functions
   module Utils
     module_function
 

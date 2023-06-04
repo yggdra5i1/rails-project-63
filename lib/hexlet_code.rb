@@ -13,10 +13,10 @@ module HexletCode
 
   TYPE_ATTRS = {
     input: "text"
-  }
+  }.freeze
 
   DEFAULT_INPUT_OPTS = {
-    textarea: { cols: "20", rows: "40" },
+    textarea: { cols: "20", rows: "40" }
   }.freeze
 
   module_function
@@ -31,6 +31,7 @@ module HexletCode
     Tag.build("form", action: action, method: method) { form_inputs.join }
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def input(name, options = {})
     value = form_object.public_send(name)
     return if value.nil?
@@ -41,12 +42,13 @@ module HexletCode
     opts = Utils.presence(options) || Utils.presence(DEFAULT_INPUT_OPTS[tag_name.to_sym]) || {}
 
     attrs = { name: name.to_s }
-    attrs = attrs.merge(type: type_attr) if !type_attr.nil?
+    attrs = attrs.merge(type: type_attr) unless type_attr.nil?
     attrs = attrs.merge(value: value) if Tag::SINGLE_TAGS.include?(tag_name)
     attrs = attrs.merge(opts)
 
     add_form_input(Tag.build(tag_name, attrs) { value })
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def init_form_object(obj)
     @form_object = obj
