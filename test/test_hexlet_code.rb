@@ -33,4 +33,19 @@ class TestHexletCode < Minitest::Test
                    '<textarea name="job" cols="20" rows="40">hexlet</textarea></form>'
     assert_equal res, expected_res
   end
+
+  def test_form_for_with_options_of_inputs
+    user = User.new name: 'rob', job: '', gender: 'm'
+
+    res = HexletCode.form_for user, url: '#' do |f|
+      f.input :name, class: 'user-input'
+      f.input :job
+    end
+
+    expected_res = '<form action="#" method="post">'\
+                   '<input name="name" type="text" value="rob" class="user-input">'\
+                   '<input name="job" type="text" value=""></form>'
+
+    assert_equal res, expected_res
+  end
 end
