@@ -48,4 +48,38 @@ class TestHexletCode < Minitest::Test
 
     assert_equal res, expected_res
   end
+
+  def test_form_for_text_area
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+    res = HexletCode.form_for user do |f|
+      f.input :job, as: :text
+    end
+    expected_res = '<form action="#" method="post"><textarea name="job" cols="20" rows="40">'\
+                   'hexlet</textarea></form>'
+
+    assert_equal res, expected_res
+  end
+
+  def test_form_for_text_area_with_options
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+    res = HexletCode.form_for user, url: '#' do |f|
+      f.input :job, as: :text, rows: 50, cols: 50
+    end
+    expected_res = '<form action="#" method="post">'\
+                   '<textarea name="job" rows="50" cols="50">hexlet</textarea></form>'
+
+    assert_equal res, expected_res
+  end
+
+  def test_form_for_raise_errors
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+
+    assert_raises(NoMethodError) do
+      HexletCode.form_for user, url: '/users' do |f|
+        f.input :name
+        f.input :job, as: :text
+        f.input :age
+      end
+    end
+  end
 end
